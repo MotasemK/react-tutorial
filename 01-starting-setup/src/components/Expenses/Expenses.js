@@ -5,8 +5,8 @@ import './Expenses.css';
 function Expenses(props){
     return (
     <Card className = "expenses">
-    {console.log(props)}
-    {console.log('test')}
+    {/* {console.log(props)}
+    {console.log('test')} */}
 
     {props.items.map((item) => {
       return <ExpenseItem title = {item.title}

@@ -5,8 +5,9 @@ function ExpenseDate(props) {
     let day
     let year
 
-    console.log("ExpenseDate Output")
-    console.log(props)
+    // console.log("ExpenseDate Output")
+    // console.log(props)
+    
     // props.date.forEach(element => {
     //   month = element.toLocaleString('en-US', {month: 'long'})
     //   day = element.toLocaleString('en-US', {day: '2-digit'})

@@ -6,12 +6,17 @@ function ExpenseItem(props) {
 
     
   return (
+    
     <Card className = "expense-item">
+      
+      {console.log(`ExpenseItem props`)}
+      {console.log(props)}
       <ExpenseDate date = {props.date} />
       <div className = "expense-item__description">
         <h2>{props.title}</h2>
         <div className = "expense-item__price">${props.amount}</div>
       </div>
+      
     </Card>
   );
 }

@@ -5,21 +5,36 @@ import './Expenses.css';
 function Expenses(props){
     return (
     <Card className = "expenses">
-    {/* { <ExpenseItem
-        title={props.items.forEach((item) => {
+    {console.log(props)}
+    {console.log('test')}
+
+    {props.items.map((item) => {
+      return <ExpenseItem title = {item.title}
+      amount = {item.amount}
+      date = {item.date}></ExpenseItem>
+    })}
+
+
+
+    {/*
+      The Problem here was that all items rendered in one card
+      <ExpenseItem
+        title={props.items.map((item) => {
           console.log(item.title)
           return item.title
         }) }
-        amount={props.items.forEach((item) => {
+        amount={props.items.map((item) => {
           console.log(item.amount)
-          return item.title
+          return item.amount
         })}
-        date={props.items.forEach((item) => {
+        date={props.items.map((item) => {
           console.log(item.date.toISOString())
-          return item.title
+          return item.date
         })}
-      ></ExpenseItem> } */}
-      <ExpenseItem
+      ></ExpenseItem>*/}
+      
+
+    {/*<ExpenseItem
         title={props.items[0].title}
         amount={props.items[0].amount}
         date={props.items[0].date}
@@ -38,7 +53,7 @@ function Expenses(props){
       title={props.items[3].title}
       amount={props.items[3].amount}
       date={props.items[3].date}
-    />
+    />*/}
     </Card>
     );
     }

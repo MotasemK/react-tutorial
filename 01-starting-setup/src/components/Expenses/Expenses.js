@@ -1,22 +1,37 @@
-import ExpenseItem from './ExpenseItem';
-import Card from '../UI/Card';
-import './Expenses.css';
+import React, { useState } from "react";
 
-function Expenses(props){
-    return (
-    <Card className = "expenses">
-    {/* {console.log(props)}
+import Card from "../UI/Card";
+import ExpensesFilter from "./ExpensesFilter";
+import ExpensesList from "./ExpensesList";
+import ExpensesChart from './ExpensesChart'
+import "./Expenses.css";
+
+function Expenses(props) {
+  const [filteredYear, setFilteredYear] = useState("2020");
+
+  const filterChangeHandler = (selectedYear) => {
+    setFilteredYear(selectedYear);
+  };
+
+  const filteredExpenses = props.items.filter((expense) => {
+    return expense.date.getFullYear().toString() === filteredYear;
+  });
+
+  
+
+  return (
+    <Card className="expenses">
+      {/* {console.log(props)}
     {console.log('test')} */}
 
-    {props.items.map((item) => {
-      return <ExpenseItem title = {item.title}
-      amount = {item.amount}
-      date = {item.date}></ExpenseItem>
-    })}
+      <ExpensesFilter
+        selected={filteredYear}
+        onChangeFilter={filterChangeHandler}
+      />
+      <ExpensesChart expenses={filteredExpenses} />
+      <ExpensesList items = {filteredExpenses} />
 
-
-
-    {/*
+      {/*
       The Problem here was that all items rendered in one card
       <ExpenseItem
         title={props.items.map((item) => {
@@ -32,9 +47,8 @@ function Expenses(props){
           return item.date
         })}
       ></ExpenseItem>*/}
-      
 
-    {/*<ExpenseItem
+      {/*<ExpenseItem
         title={props.items[0].title}
         amount={props.items[0].amount}
         date={props.items[0].date}
@@ -55,6 +69,6 @@ function Expenses(props){
       date={props.items[3].date}
     />*/}
     </Card>
-    );
-    }
+  );
+}
 export default Expenses;

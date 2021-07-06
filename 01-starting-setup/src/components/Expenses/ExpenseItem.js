@@ -1,31 +1,30 @@
-import React, { useState } from 'react';
-import ExpenseDate from './ExpenseDate';
-import Card from '../UI/Card'
-import './ExpenseItem.css';
+import React, { useState } from "react";
+import ExpenseDate from "./ExpenseDate";
+import Card from "../UI/Card";
+import "./ExpenseItem.css";
 
 function ExpenseItem(props) {
-
   // first element is the old value and the second element is the updated one.
-  const [title, setTitle] = useState(props.title)
+  const [title, setTitle] = useState(props.title);
 
   const clickHandler = () => {
-    setTitle('Updated')
-    console.log(title)
-  }
-    
+    setTitle("Updated");
+    console.log(title);
+  };
+
   return (
-    
-    <Card className = "expense-item">
-      
-      {/* {console.log(`ExpenseItem props`)}
+    <li>
+      <Card className="expense-item">
+        {/* {console.log(`ExpenseItem props`)}
       {console.log(props)} */}
-      <ExpenseDate date = {props.date} />
-      <div className = "expense-item__description">
-        <h2>{title}</h2>
-        <div className = "expense-item__price">${props.amount}</div>
-      </div>
-      <button onClick = {clickHandler} >Change title</button>
-    </Card>
+        <ExpenseDate date={props.date} />
+        <div className="expense-item__description">
+          <h2>{title}</h2>
+          <div className="expense-item__price">${props.amount}</div>
+        </div>
+        <button onClick={clickHandler}>Change title</button>
+      </Card>
+    </li>
   );
 }
 

@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useReducer } from "react";
-
+import React, { useState, useEffect, useReducer, useContext, useRef } from "react";
 import Card from "../UI/Card/Card";
 import classes from "./Login.module.css";
 import Button from "../UI/Button/Button";
+import AuthContext from "../../store/auth-context";
+import Input from "../UI/input/input";
 
 // Reducer function can be created outside the component scope because we dont
 // need any data from this component.
@@ -47,33 +48,36 @@ const Login = (props) => {
     isValid: null,
   });
 
+  const authCtx = useContext(AuthContext);
+
+  const emailInputRef = useRef()
+  const passwordInputRef = useRef()
+
   // after meeting the validity requiements for ex password exceeds 6 chars when we add more chars
   // the function checks for validity again thats the case we dont want. we will use object destructuring technique
   // to pull out certain props from an object
 
   // this is alice assignment because its a part of object dest syntax
-  const { isValid: emailIsValid } = emailState
-  const { isValid: passwordIsValid} = passwordState
+  const { isValid: emailIsValid } = emailState;
+  const { isValid: passwordIsValid } = passwordState;
 
- // USE EFFECT SECTION
+  // USE EFFECT SECTION
   useEffect(() => {
     const identifier = setTimeout(() => {
-      console.log('Checking for validity')
+      console.log("Checking for validity");
       setFormIsValid(
         // emailState.isValid && passwordState.isValid
 
         // at this approach this function will excute only if the validity status changes
         emailIsValid && passwordIsValid
-      )
-    }, 500)
+      );
+    }, 500);
 
-  //   // before useEffect function excution this clean up function will run except the first excution
+    //   // before useEffect function excution this clean up function will run except the first excution
     return () => {
-      clearTimeout(identifier)
-    }
-
-    }
-    , [emailIsValid, passwordIsValid])
+      clearTimeout(identifier);
+    };
+  }, [emailIsValid, passwordIsValid]);
 
   // in dependencies we added what we are using inside our useEffect function
   // the function is excuted only if the dependencies are changed
@@ -140,42 +144,47 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(emailState.value, passwordState.value);
+    if(formIsValid){
+      authCtx.onLogin(emailState.value, passwordState.value);
+    }else if (!emailIsValid){
+      emailInputRef.current.focus()
+    }else{
+      passwordInputRef.current.focus()
+    }
+    
   };
 
   return (
     <Card className={classes.login}>
       <form onSubmit={submitHandler}>
-        <div
-          className={`${classes.control} ${
-            emailState.isValid === false ? classes.invalid : ""
-          }`}
-        >
-          <label htmlFor="email">E-Mail</label>
-          <input
-            type="email"
-            id="email"
-            value={emailState.value}
-            onChange={emailChangeHandler}
-            onBlur={validateEmailHandler}
-          />
-        </div>
+        <Input
+          ref={emailInputRef}
+          id="email"
+          label="E-mail"
+          type="email"
+          isValid={emailIsValid}
+          value={emailState.value}
+          onChange={emailChangeHandler}
+          onBlur={validateEmailHandler}
+        ></Input>
         <div
           className={`${classes.control} ${
             passwordState.isValid === false ? classes.invalid : ""
           }`}
         >
           <label htmlFor="password">Password</label>
-          <input
+          <Input
+          ref={passwordInputRef}
             type="password"
-            id="password"
+            id="Password"
+            isValid={passwordIsValid}
             value={passwordState.value}
             onChange={passwordChangeHandler}
             onBlur={validatePasswordHandler}
           />
         </div>
         <div className={classes.actions}>
-          <Button type="submit" className={classes.btn} disabled={!formIsValid}>
+          <Button type="submit" className={classes.btn} >
             Login
           </Button>
         </div>

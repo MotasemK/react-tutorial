@@ -6,7 +6,7 @@ const defaultCartState = {
   items: [],
   totalAmount: 0
 };
-
+// Here we added a cart reducer
 const cartReducer = (state, action) => {
   if (action.type === 'ADD') {
     const updatedItems = state.items.concat(action.item);
